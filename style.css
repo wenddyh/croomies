@@ -89,11 +89,12 @@ li.completed {
     border-radius: 5px;
 }
 
-#sort-button{
-    padding: 10px 20px;
-    font-size: 16px;
+#sort-button {
+    padding: 15px 30px; /* Increased padding to make the button bigger */
+    font-size: 18px;    /* Increased font size */
+    color: white;       /* Changed font color to white */
     border: none;
-    border-radius: 5px;
+    border-radius: 8px; /* Slightly increased border radius */
     cursor: pointer;
     margin-bottom: 40px;
 }
