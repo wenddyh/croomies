@@ -1,0 +1,93 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+    background: linear-gradient(
+        90deg,
+        red 0%, red 25%,
+        blue 25%, blue 50%,
+        green 50%, green 75%,
+        yellow 75%, yellow 100%
+    );
+    background-size: 200% 100%;
+    animation: colorShift 10s linear infinite;
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes colorShift {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
+}
+
+h1 {
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 1); /* Add background color */
+    padding: 20px; /* Add padding for space around the title */
+    border-radius: 10px; /* Add rounded corners */
+    text-align: center; /* Center the text */
+}
+
+#categories {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    max-width: 1200px;
+}
+
+#wendy-chores, #damian-chores {
+    width: 45%;
+    background-color: rgba(10, 10, 10, 0.2);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#wendy-chores h2, #damian-chores h2 {
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+#wendy-chores ul, #damian-chores ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#wendy-chores li, #damian-chores li {
+    background-color: rgba(1, 1, 1, 0.1);
+    color: white; /* Add this line to make the text white */
+    padding: 12px 18px;
+    margin: 8px 0;
+    border-radius: 6px;
+    text-align: center;
+}
+
+#sort-button {
+    padding: 15px 30px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: transform 0.2s ease;
+    margin-top: 17px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+#sort-button:hover {
+    transform: scale(1.2);
+
+}
