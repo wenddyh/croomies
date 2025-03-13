@@ -96,7 +96,7 @@ li.completed {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 200px;
     background-color: #663399;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Added text shadow */
 }
