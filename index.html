@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Croomies</title>
+    <title>Croomies Chores</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>CROOMIES</h1>
+    <h1>Croomies Chores</h1>
+    <button id="sort-button">Asignar</button>
 
     <div id="categories">
         <div id="wendy-chores">
-            <h2>WENDY</h2>
+            <h2>Wendy's Chores</h2>
+            <div class="progress-container">
+                <div id="wendy-progress" class="progress-bar"></div>
+            </div>
             <ul id="wendy-chores-list"></ul>
         </div>
         <div id="damian-chores">
-            <h2>DAMIÁN</h2>
+            <h2>Damián's Chores</h2>
+            <div class="progress-container">
+                <div id="damian-progress" class="progress-bar"></div>
+            </div>
             <ul id="damian-chores-list"></ul>
         </div>
     </div>
-
-    <button id="sort-button">Asignar</button>
 
     <script src="script.js"></script>
 </body>
