@@ -1,11 +1,51 @@
 document.addEventListener('DOMContentLoaded', function() {
     const chores = [
-        "Clean Kitchen",
-        "Take out Trash",
-        "Vacuum Living Room",
-        "Clean Bathroom",
-        "Wash Dishes",
-        "Mop Floors"
+        "Lunes Almuerzo",
+        "Lunes Cena",
+        "Lunes Ver si hay que comprar cosas",
+        "Lunes Piedras Robin",
+        "Lunes Basura",
+        "Lunes Platos",
+        "Lunes Ordenar Living",
+        "Lunes Chia Puddings",
+
+        "Martes Almuerzo",
+        "Martes Cena",
+        "Martes Ver si hay que comprar cosas",
+        "Martes Piedras Robin",
+        "Martes Basura",
+        "Martes Platos",
+        "Martes Ordenar Living",
+        "Martes Chia Puddings",
+
+        "Miercoles Almuerzo",
+        "Miercoles Cena",
+        "Miercoles Ver si hay que comprar cosas",
+        "Miercoles Piedras Robin",
+        "Miercoles Basura",
+        "Miercoles Platos",
+        "Miercoles Ordenar Living",
+        "Miercoles Chia Puddings",
+
+        "Jueves Almuerzo",
+        "Jueves Cena",
+        "Jueves Ver si hay que comprar cosas",
+        "Jueves Piedras Robin",
+        "Jueves Basura",
+        "Jueves Platos",
+        "Jueves Ordenar Living",
+        "Jueves Chia Puddings",
+
+        "Viernes Almuerzo",
+        "Viernes Cena",
+        "Viernes Ver si hay que comprar cosas",
+        "Viernes Piedras Robin",
+        "Viernes Basura",
+        "Viernes Platos",
+        "Viernes Ordenar Living",
+        "Viernes Chia Puddings",
+
+        "Limpiar baño"
     ];
 
     const wendyChoresList = document.getElementById('wendy-chores-list');
@@ -14,47 +54,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function alternateBackgroundColors() {
         const bgColors = [
-            ['#FF5733', '#33A8FF'], // Orange-Red & Light Blue
-            ['#FFC300', '#8A2BE2'], // Yellow & Purple
-            ['#2ECC71', '#E74C3C'], // Green & Red
-            ['#9B59B6', '#F39C12']  // Purple & Orange
+            ['#FF5733', '#33A8FF'],
+            ['#FFC300', '#8A2BE2'],
+            ['#2ECC71', '#E74C3C'],
+            ['#9B59B6', '#F39C12']
         ];
 
         const titleColors = [
-            '#FFD700', // Gold
-            '#00FFFF', // Cyan
-            '#FF69B4', // Hot Pink
-            '#ADFF2F'  // GreenYellow
+            '#FFD700',
+            '#00FFFF',
+            '#FF69B4',
+            '#ADFF2F'
+        ];
+
+        const boxColors = [
+            ['#483D8B', '#2F4F4F'], // DarkSlateBlue & DarkSlateGray
+            ['#800000', '#006400'], // Maroon & DarkGreen
+            ['#A0522D', '#4682B4'], // Sienna & SteelBlue
+            ['#556B2F', '#8B008B']  // DarkOliveGreen & DarkMagenta
         ];
 
         const buttonColors = [
-            '#800080', // Purple
-            '#008080', // Teal
-            '#FFA500', // Orange
-            '#00FF00'  // Lime
+            '#800080',
+            '#008080',
+            '#FFA500',
+            '#00FF00'
         ];
 
         const randomBgColors = bgColors[Math.floor(Math.random() * bgColors.length)];
         const randomTitleColor = titleColors[Math.floor(Math.random() * titleColors.length)];
         const randomButtonColor = buttonColors[Math.floor(Math.random() * buttonColors.length)];
+        const randomBoxColors = boxColors[Math.floor(Math.random() * boxColors.length)];
 
         const color1 = randomBgColors[0];
         const color2 = randomBgColors[1];
 
         document.body.style.background = `linear-gradient(90deg, ${color1} 50%, ${color2} 50%)`;
-
-        // Update title box background color
         document.querySelector('h1').style.backgroundColor = randomTitleColor;
-
-        // Update button background color
         document.getElementById('sort-button').style.backgroundColor = randomButtonColor;
 
-        // Darken the colors for text
         const darkerColor1 = darkenColor(color1, 0.6);
         const darkerColor2 = darkenColor(color2, 0.6);
 
         document.getElementById('wendy-chores').style.color = darkerColor1;
         document.getElementById('damian-chores').style.color = darkerColor2;
+
+        document.getElementById('wendy-chores').style.backgroundColor = randomBoxColors[0];
+        document.getElementById('damian-chores').style.backgroundColor = randomBoxColors[1];
     }
 
     function darkenColor(color, factor) {
@@ -78,29 +124,91 @@ document.addEventListener('DOMContentLoaded', function() {
         return "#" + rr + gg + bb;
     }
 
-    // Call alternateBackgroundColors() once to set initial colors
-    alternateBackgroundColors();
-
-    // Add event listener for clicks on the entire document body
-    document.body.addEventListener('click', alternateBackgroundColors);
-
     sortButton.addEventListener('click', function() {
-        const assignedChores = assignChores(chores);
-        wendyChoresList.innerHTML = '';
-        damianChoresList.innerHTML = '';
+        const completedChores = JSON.parse(localStorage.getItem('completedChores')) || [];
 
-        assignedChores.wendyChores.forEach(chore => {
-            const listItem = document.createElement('li');
-            listItem.textContent = chore;
-            wendyChoresList.appendChild(listItem);
-        });
-
-        assignedChores.damianChores.forEach(chore => {
-            const listItem = document.createElement('li');
-            listItem.textContent = chore;
-            damianChoresList.appendChild(listItem);
-        });
+        if (completedChores.length > 0) {
+            localStorage.removeItem('completedChores');
+            const assignedChores = assignChores(chores);
+            displayChores(assignedChores);
+        } else {
+            const assignedChores = assignChores(chores);
+            displayChores(assignedChores);
+        }
     });
+
+function displayChores(assignedChores) {
+    wendyChoresList.innerHTML = '';
+    damianChoresList.innerHTML = '';
+
+    // Sort chores by day of the week
+    const sortedWendyChores = sortChoresByDay(assignedChores.wendyChores);
+    const sortedDamianChores = sortChoresByDay(assignedChores.damianChores);
+
+    sortedWendyChores.forEach(chore => {
+        createChoreItem(chore, wendyChoresList);
+    });
+
+    sortedDamianChores.forEach(chore => {
+        createChoreItem(chore, damianChoresList);
+    });
+
+    updateProgressBars(assignedChores);
+}
+
+function sortChoresByDay(chores) {
+    const dayOrder = {
+        "Lunes": 1,
+        "Martes": 2,
+        "Miercoles": 3,
+        "Jueves": 4,
+        "Viernes": 5
+    };
+
+    return chores.sort((a, b) => {
+        const dayA = a.split(" ")[0]; // Get the day (e.g., "Lunes")
+        const dayB = b.split(" ")[0];
+
+        return (dayOrder[dayA] || 6) - (dayOrder[dayB] || 6); // Use 6 for chores without a day
+    });
+}
+
+    function createChoreItem(chore, list) {
+        const listItem = document.createElement('li');
+        listItem.textContent = chore;
+        listItem.dataset.chore = chore;
+
+        const completedChores = JSON.parse(localStorage.getItem('completedChores')) || [];
+        if (completedChores.includes(chore)) {
+            listItem.classList.add('completed');
+        }
+
+        listItem.addEventListener('click', toggleChoreStatus);
+        list.appendChild(listItem);
+    }
+
+    function toggleChoreStatus(event) {
+        const listItem = event.target;
+        const chore = listItem.dataset.chore;
+
+        let completedChores = JSON.parse(localStorage.getItem('completedChores')) || [];
+
+        if (listItem.classList.contains('completed')) {
+            listItem.classList.remove('completed');
+            completedChores = completedChores.filter(c => c !== chore);
+        } else {
+            listItem.classList.add('completed');
+            completedChores.push(chore);
+        }
+
+        localStorage.setItem('completedChores', JSON.stringify(completedChores));
+
+        const assignedChores = {
+            wendyChores: Array.from(wendyChoresList.children).map(li => li.dataset.chore),
+            damianChores: Array.from(damianChoresList.children).map(li => li.dataset.chore)
+        };
+        updateProgressBars(assignedChores);
+    }
 
     function assignChores(chores) {
         const wendyChores = [];
@@ -108,13 +216,47 @@ document.addEventListener('DOMContentLoaded', function() {
         const shuffledChores = [...chores].sort(() => 0.5 - Math.random());
 
         shuffledChores.forEach((chore, index) => {
-            if (index % 2 === 0) {
-                wendyChores.push(chore);
-            } else {
-                damianChores.push(chore);
+            if (chores.length % 2 === 0) { //even number of chores, distribute evenly
+                if (index % 2 === 0) {
+                    wendyChores.push(chore);
+                } else {
+                    damianChores.push(chore);
+                }
+            }else{ //odd number of chores, give extra to Damian
+                if (index % 2 === 0) {
+                    damianChores.push(chore);
+                } else {
+                    wendyChores.push(chore);
+                }
             }
         });
 
+        if (chores.length % 2 !== 0){
+            damianChores.sort();
+            wendyChores.sort();
+        }
+
         return { wendyChores, damianChores };
     }
+
+    function updateProgressBars(assignedChores) {
+        const wendyCompleted = assignedChores.wendyChores.filter(chore => {
+            return JSON.parse(localStorage.getItem('completedChores'))?.includes(chore);
+        }).length;
+        const damianCompleted = assignedChores.damianChores.filter(chore => {
+            return JSON.parse(localStorage.getItem('completedChores'))?.includes(chore);
+        }).length;
+
+        const wendyTotal = assignedChores.wendyChores.length;
+        const damianTotal = assignedChores.damianChores.length;
+
+        const wendyPercent = wendyTotal > 0 ? (wendyCompleted / wendyTotal) * 100 : 0;
+        const damianPercent = damianTotal > 0 ? (damianCompleted / damianTotal) * 100 : 0;
+
+        document.getElementById('wendy-progress').style.width = `${wendyPercent}%`;
+        document.getElementById('damian-progress').style.width = `${damianPercent}%`;
+    }
+
+    alternateBackgroundColors();
+    document.body.addEventListener('click', alternateBackgroundColors);
 });
