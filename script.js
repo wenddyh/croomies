@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Lunes ver si hay que comprar cosas",
         "Lunes Piedras Robin",
         "Lunes Basura",
-        "Lunes Platos",
+        "Lunes Platos Almuerzo",
+        "Lunes Platos Cena",
         "Lunes Ordenar Living",
         "Lunes y Martes Chia Puddings",
 
@@ -14,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Martes ver si hay que comprar cosas",
         "Martes Piedras Robin",
         "Martes Basura",
-        "Martes Platos",
+        "Martes Platos Almuerzo",
+        "Martes Platos Cena",
         "Martes Ordenar Living",
 
         "Miercoles Almuerzo",
@@ -22,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Miercoles ver si hay que comprar cosas",
         "Miercoles Piedras Robin",
         "Miercoles Basura",
-        "Miercoles Platos",
+        "Miercoles Platos Almuerzo",
+        "Miercoles Platos Cena",
         "Miercoles Ordenar Living",
         "Miercoles y Jueves Chia Puddings",
 
@@ -31,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Jueves ver si hay que comprar cosas",
         "Jueves Piedras Robin",
         "Jueves Basura",
-        "Jueves Platos",
+        "Jueves Platos Almuerzo",
+        "Jueves Platos Cena",
         "Jueves Ordenar Living",
 
         "Viernes Almuerzo",
@@ -39,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Viernes ver si hay que comprar cosas",
         "Viernes Piedras Robin",
         "Viernes Basura",
-        "Viernes Platos",
+        "Viernes Platos Almuerzo",
+        "Viernes Platos Cena",
         "Viernes Ordenar Living",
         "Viernes y Sabado Chia Puddings",
 
