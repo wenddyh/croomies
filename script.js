@@ -127,19 +127,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return "#" + rr + gg + bb;
     }
 
-    sortButton.addEventListener('click', function() {
-        const completedChores = JSON.parse(localStorage.getItem('completedChores')) || [];
+ sortButton.addEventListener('click', function() {
+    // ... your existing code ...
 
-        if (completedChores.length > 0) {
-            localStorage.removeItem('completedChores');
-            const assignedChores = assignChores(chores);
-            displayChores(assignedChores);
-        } else {
-            const assignedChores = assignChores(chores);
-            displayChores(assignedChores);
-        }
+    // Send data to Make
+    fetch('https://hook.us2.make.com/wbd5rg7e1mhvseoy83v4oikn6bmuhmli', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(assignedChores)
     });
-
+});
 function displayChores(assignedChores) {
     wendyChoresList.innerHTML = '';
     damianChoresList.innerHTML = '';
