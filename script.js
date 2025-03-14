@@ -127,53 +127,54 @@ document.addEventListener('DOMContentLoaded', function() {
         return "#" + rr + gg + bb;
     }
 
- sortButton.addEventListener('click', function() {
-    // ... your existing code ...
+    sortButton.addEventListener('click', function() {
+        const assignedChores = assignChores(chores); // Call assignChores() and store the result
+        displayChores(assignedChores); //call function to display chores.
 
-    // Send data to Make
-    fetch('https://hook.us2.make.com/wbd5rg7e1mhvseoy83v4oikn6bmuhmli', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(assignedChores)
-    });
-});
-function displayChores(assignedChores) {
-    wendyChoresList.innerHTML = '';
-    damianChoresList.innerHTML = '';
-
-    // Sort chores by day of the week
-    const sortedWendyChores = sortChoresByDay(assignedChores.wendyChores);
-    const sortedDamianChores = sortChoresByDay(assignedChores.damianChores);
-
-    sortedWendyChores.forEach(chore => {
-        createChoreItem(chore, wendyChoresList);
+        fetch('https://hook.us2.make.com/wbd5rg7e1mhvseoy83v4oikn6bmuhmli', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(assignedChores)
+        });
     });
 
-    sortedDamianChores.forEach(chore => {
-        createChoreItem(chore, damianChoresList);
-    });
+    function displayChores(assignedChores) {
+        wendyChoresList.innerHTML = '';
+        damianChoresList.innerHTML = '';
 
-    updateProgressBars(assignedChores);
-}
+        // Sort chores by day of the week
+        const sortedWendyChores = sortChoresByDay(assignedChores.wendyChores);
+        const sortedDamianChores = sortChoresByDay(assignedChores.damianChores);
 
-function sortChoresByDay(chores) {
-    const dayOrder = {
-        "Lunes": 1,
-        "Martes": 2,
-        "Miercoles": 3,
-        "Jueves": 4,
-        "Viernes": 5
-    };
+        sortedWendyChores.forEach(chore => {
+            createChoreItem(chore, wendyChoresList);
+        });
 
-    return chores.sort((a, b) => {
-        const dayA = a.split(" ")[0]; // Get the day (e.g., "Lunes")
-        const dayB = b.split(" ")[0];
+        sortedDamianChores.forEach(chore => {
+            createChoreItem(chore, damianChoresList);
+        });
 
-        return (dayOrder[dayA] || 6) - (dayOrder[dayB] || 6); // Use 6 for chores without a day
-    });
-}
+        updateProgressBars(assignedChores);
+    }
+
+    function sortChoresByDay(chores) {
+        const dayOrder = {
+            "Lunes": 1,
+            "Martes": 2,
+            "Miercoles": 3,
+            "Jueves": 4,
+            "Viernes": 5
+        };
+
+        return chores.sort((a, b) => {
+            const dayA = a.split(" ")[0]; // Get the day (e.g., "Lunes")
+            const dayB = b.split(" ")[0];
+
+            return (dayOrder[dayA] || 6) - (dayOrder[dayB] || 6); // Use 6 for chores without a day
+        });
+    }
 
     function createChoreItem(chore, list) {
         const listItem = document.createElement('li');
@@ -195,70 +196,4 @@ function sortChoresByDay(chores) {
 
         let completedChores = JSON.parse(localStorage.getItem('completedChores')) || [];
 
-        if (listItem.classList.contains('completed')) {
-            listItem.classList.remove('completed');
-            completedChores = completedChores.filter(c => c !== chore);
-        } else {
-            listItem.classList.add('completed');
-            completedChores.push(chore);
-        }
-
-        localStorage.setItem('completedChores', JSON.stringify(completedChores));
-
-        const assignedChores = {
-            wendyChores: Array.from(wendyChoresList.children).map(li => li.dataset.chore),
-            damianChores: Array.from(damianChoresList.children).map(li => li.dataset.chore)
-        };
-        updateProgressBars(assignedChores);
-    }
-
-    function assignChores(chores) {
-        const wendyChores = [];
-        const damianChores = [];
-        const shuffledChores = [...chores].sort(() => 0.5 - Math.random());
-
-        shuffledChores.forEach((chore, index) => {
-            if (chores.length % 2 === 0) { //even number of chores, distribute evenly
-                if (index % 2 === 0) {
-                    wendyChores.push(chore);
-                } else {
-                    damianChores.push(chore);
-                }
-            }else{ //odd number of chores, give extra to Damian
-                if (index % 2 === 0) {
-                    damianChores.push(chore);
-                } else {
-                    wendyChores.push(chore);
-                }
-            }
-        });
-
-        if (chores.length % 2 !== 0){
-            damianChores.sort();
-            wendyChores.sort();
-        }
-
-        return { wendyChores, damianChores };
-    }
-
-    function updateProgressBars(assignedChores) {
-        const wendyCompleted = assignedChores.wendyChores.filter(chore => {
-            return JSON.parse(localStorage.getItem('completedChores'))?.includes(chore);
-        }).length;
-        const damianCompleted = assignedChores.damianChores.filter(chore => {
-            return JSON.parse(localStorage.getItem('completedChores'))?.includes(chore);
-        }).length;
-
-        const wendyTotal = assignedChores.wendyChores.length;
-        const damianTotal = assignedChores.damianChores.length;
-
-        const wendyPercent = wendyTotal > 0 ? (wendyCompleted / wendyTotal) * 100 : 0;
-        const damianPercent = damianTotal > 0 ? (damianCompleted / damianTotal) * 100 : 0;
-
-        document.getElementById('wendy-progress').style.width = `${wendyPercent}%`;
-        document.getElementById('damian-progress').style.width = `${damianPercent}%`;
-    }
-
-    alternateBackgroundColors();
-    document.body.addEventListener('click', alternateBackgroundColors);
-});
+        if (listItem
